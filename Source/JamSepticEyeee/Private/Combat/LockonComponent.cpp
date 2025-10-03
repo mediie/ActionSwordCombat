@@ -5,6 +5,7 @@
 #include "Combat/LockonComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Interfaces/Enemy.h"
 
 // Sets default values for this component's properties
 ULockonComponent::ULockonComponent()
@@ -38,6 +39,16 @@ void ULockonComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	FVector CurrentLocation{ GetOwner()->GetActorLocation() };
 	FVector TargetLocation{ CurrentTargetActor->GetActorLocation() };
 
+	double TargetDistance{
+	FVector::Distance(CurrentLocation, TargetLocation)
+	};
+
+	if (TargetDistance >= BreakDistance)
+	{
+		EndLockon();
+		return;
+	}
+	
 	TargetLocation.Z -= 75;
 	
 	FRotator NewRotation{ UKismetMathLibrary::FindLookAtRotation(
@@ -73,6 +84,7 @@ void ULockonComponent::StartLockon(float Radius)
 	
 	UE_LOG(LogTemp, Warning, TEXT("Found Target: %s"), *OutResult.GetActor()->GetName());
 
+	if (!OutResult.GetActor()->Implements<UEnemy>()) { return;} 
 	CurrentTargetActor = OutResult.GetActor();
 
 	Controller->SetIgnoreLookInput(true);
