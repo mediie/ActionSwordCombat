@@ -82,3 +82,25 @@ void ULockonComponent::StartLockon(float Radius)
 	CameraBoom->TargetOffset = FVector{0.0f, 0.0f, 100.0f};
 	
 }
+
+void ULockonComponent::EndLockon()
+{
+	CurrentTargetActor = nullptr;
+	Controller->ResetIgnoreLookInput();
+	MovementComp->bOrientRotationToMovement = true;
+	MovementComp->bUseControllerDesiredRotation = false;
+	CameraBoom->TargetOffset = FVector {0, 30, 50};
+
+}
+
+void ULockonComponent::ToggleLockon(float Radius)
+{
+	if (IsValid(CurrentTargetActor))
+	{
+		EndLockon();
+	}
+	else
+	{
+		StartLockon(Radius);
+	}
+}
