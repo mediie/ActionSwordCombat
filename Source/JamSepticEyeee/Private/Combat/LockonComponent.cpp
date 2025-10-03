@@ -96,7 +96,7 @@ void ULockonComponent::StartLockon(float Radius)
 
 	IEnemy::Execute_OnSelect(CurrentTargetActor);
 
-	
+	OnUpdatedTargetDelegate.Broadcast(CurrentTargetActor);	
 }
 
 void ULockonComponent::EndLockon()
@@ -108,6 +108,8 @@ void ULockonComponent::EndLockon()
 	MovementComp->bOrientRotationToMovement = true;
 	MovementComp->bUseControllerDesiredRotation = false;
 	CameraBoom->TargetOffset = FVector {0, 30, 50};
+
+	OnUpdatedTargetDelegate.Broadcast(CurrentTargetActor);	
 
 }
 
