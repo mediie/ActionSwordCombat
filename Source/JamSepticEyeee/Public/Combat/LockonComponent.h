@@ -17,12 +17,18 @@ class JAMSEPTICEYEEE_API ULockonComponent : public UActorComponent
 	APlayerController* Controller;
 
 	class UCharacterMovementComponent* MovementComp;
+
+	class USpringArmComponent* CameraBoom;
 	
 
 public:	
 	// Sets default values for this component's properties
 	ULockonComponent();
 
+	AActor* CurrentTargetActor;
+	
+
+	
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

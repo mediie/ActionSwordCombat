@@ -3,6 +3,8 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Combat/LockonComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values for this component's properties
 ULockonComponent::ULockonComponent()
@@ -23,7 +25,26 @@ void ULockonComponent::BeginPlay()
 	OwnerRef = GetOwner<ACharacter>();
 	Controller = GetWorld()->GetFirstPlayerController();
 	MovementComp = OwnerRef->GetCharacterMovement();
+	CameraBoom = OwnerRef->FindComponentByClass<USpringArmComponent>();
+}
+
+
+// Called every frame
+void ULockonComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (!IsValid(CurrentTargetActor)) { return; }
+	FVector CurrentLocation{ GetOwner()->GetActorLocation() };
+	FVector TargetLocation{ CurrentTargetActor->GetActorLocation() };
+
+	TargetLocation.Z -= 75;
 	
+	FRotator NewRotation{ UKismetMathLibrary::FindLookAtRotation(
+		CurrentLocation, TargetLocation
+		)};
+
+	Controller->SetControlRotation(NewRotation);
 }
 
 void ULockonComponent::StartLockon(float Radius)
@@ -49,25 +70,15 @@ void ULockonComponent::StartLockon(float Radius)
 
 
 	if (!bHasFoundTarget) { return; }
-	else
-	{ UE_LOG(LogTemp, Warning, TEXT("Found Target: %s"), *OutResult.GetActor()->GetName());
+	
+	UE_LOG(LogTemp, Warning, TEXT("Found Target: %s"), *OutResult.GetActor()->GetName());
 
-		Controller->SetIgnoreLookInput(true);
-		MovementComp->bOrientRotationToMovement = false;
-		MovementComp->bOrientRotationToMovement = true;
-		FRotator LookAtRotation{ (OutResult.GetActor()->GetActorLocation() - CurrentLocation).Rotation() };
-		LookAtRotation.Pitch = 0.0f;
-		LookAtRotation.Roll = 0.0f;
-		OwnerRef->SetActorRotation(LookAtRotation);
-	}
+	CurrentTargetActor = OutResult.GetActor();
+
+	Controller->SetIgnoreLookInput(true);
+	MovementComp->bOrientRotationToMovement = false;
+	MovementComp->bOrientRotationToMovement = true;
+
+	CameraBoom->TargetOffset = FVector{0.0f, 0.0f, 100.0f};
+	
 }
-
-
-// Called every frame
-void ULockonComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
