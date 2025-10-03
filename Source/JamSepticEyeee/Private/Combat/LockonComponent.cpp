@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Combat/LockonComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Combat/LockonComponent.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "Interfaces/Enemy.h"
+
 
 // Sets default values for this component's properties
 ULockonComponent::ULockonComponent()
@@ -92,11 +93,16 @@ void ULockonComponent::StartLockon(float Radius)
 	MovementComp->bOrientRotationToMovement = true;
 
 	CameraBoom->TargetOffset = FVector{0.0f, 0.0f, 100.0f};
+
+	IEnemy::Execute_OnSelect(CurrentTargetActor);
+
 	
 }
 
 void ULockonComponent::EndLockon()
 {
+	IEnemy::Execute_OnDeselect(CurrentTargetActor);
+
 	CurrentTargetActor = nullptr;
 	Controller->ResetIgnoreLookInput();
 	MovementComp->bOrientRotationToMovement = true;
