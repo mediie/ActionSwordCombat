@@ -20,9 +20,9 @@ void ULockonComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-
-	
-	// ...
+	OwnerRef = GetOwner<ACharacter>();
+	Controller = GetWorld()->GetFirstPlayerController();
+	MovementComp = OwnerRef->GetCharacterMovement();
 	
 }
 
@@ -48,10 +48,17 @@ void ULockonComponent::StartLockon(float Radius)
 	) };
 
 
-	if (bHasFoundTarget && OutResult.GetActor())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Actor Detected: %s"),
-			*OutResult.GetActor()->GetName());
+	if (!bHasFoundTarget) { return; }
+	else
+	{ UE_LOG(LogTemp, Warning, TEXT("Found Target: %s"), *OutResult.GetActor()->GetName());
+
+		Controller->SetIgnoreLookInput(true);
+		MovementComp->bOrientRotationToMovement = false;
+		MovementComp->bOrientRotationToMovement = true;
+		FRotator LookAtRotation{ (OutResult.GetActor()->GetActorLocation() - CurrentLocation).Rotation() };
+		LookAtRotation.Pitch = 0.0f;
+		LookAtRotation.Roll = 0.0f;
+		OwnerRef->SetActorRotation(LookAtRotation);
 	}
 }
 

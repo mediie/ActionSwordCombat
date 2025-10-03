@@ -12,6 +12,13 @@ class JAMSEPTICEYEEE_API ULockonComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+	ACharacter* OwnerRef;
+
+	APlayerController* Controller;
+
+	class UCharacterMovementComponent* MovementComp;
+	
+
 public:	
 	// Sets default values for this component's properties
 	ULockonComponent();
