@@ -90,7 +90,7 @@ void ULockonComponent::StartLockon(float Radius)
 
 	Controller->SetIgnoreLookInput(true);
 	MovementComp->bOrientRotationToMovement = false;
-	MovementComp->bOrientRotationToMovement = true;
+	MovementComp->bUseControllerDesiredRotation = true;
 
 	CameraBoom->TargetOffset = FVector{0.0f, 0.0f, 100.0f};
 
