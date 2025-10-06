@@ -12,6 +12,20 @@ class JAMSEPTICEYEEE_API UTraceComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+	USkeletalMeshComponent* SkeletalComp;
+
+	UPROPERTY(EditAnywhere)
+	FName Start;
+
+	UPROPERTY(EditAnywhere)
+	FName End;
+	
+	UPROPERTY(EditAnywhere)
+	FName Rotation;
+
+	UPROPERTY(EditAnywhere)
+	double BoxCollisionLength {30.0f};
+	
 public:	
 	// Sets default values for this component's properties
 	UTraceComponent();

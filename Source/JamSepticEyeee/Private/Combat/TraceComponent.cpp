@@ -19,7 +19,7 @@ void UTraceComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	SkeletalComp = GetOwner()->FindComponentByClass<USkeletalMeshComponent>();
 	
 }
 
@@ -29,6 +29,40 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	FVector StartSocketLocation{ SkeletalComp->GetSocketLocation(Start) };
+	FVector EndSocketLocation{ SkeletalComp->GetSocketLocation(End) };
+	FQuat BladeRotation{ SkeletalComp->GetSocketQuaternion(Rotation) };
+
+	TArray <FHitResult> OutResults;
+
+	double WeaponDistance{
+		FVector::Distance(StartSocketLocation, EndSocketLocation)
+	};
+	FVector BoxHalfSize{
+		BoxCollisionLength,WeaponDistance, BoxCollisionLength
+	};
+	BoxHalfSize /= 2.0f; // BoxHalfSize = BoxHalfSize / 2
+
+	FCollisionShape Box { FCollisionShape::MakeBox(BoxHalfSize) };
+
+	FCollisionQueryParams IgnoreParams{ FName(TEXT("IgnoreParams")), false, GetOwner() };
+
+	
+	bool bHasFoundTargets {GetWorld()->SweepMultiByChannel(
+		OutResults,
+		StartSocketLocation,
+		EndSocketLocation,
+		BladeRotation,
+		ECollisionChannel::ECC_GameTraceChannel2,
+		Box,
+		IgnoreParams
+	) };
+
+	
+	
+	if (bHasFoundTargets)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Found Targets"));
+	};
 }
 
