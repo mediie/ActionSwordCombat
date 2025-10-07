@@ -2,6 +2,7 @@
 
 
 #include "Combat/TraceComponent.h"
+#include "Engine/DamageEvents.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "kismet/KismetMathLibrary.h"
 #include "Interfaces/Fighter.h"
@@ -91,6 +92,27 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		CharacterDamage = FighterRef->GetDamage();
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Damage %f"), CharacterDamage);
+	FDamageEvent TargetAttackedEvent;
+
+	for (const FHitResult& Hit: OutResults)
+	{
+		AActor* TargetActor{ Hit.GetActor() };
+
+		if (TargetsToIgnore.Contains(TargetActor)) { continue; }
+		
+		TargetActor->TakeDamage(
+			CharacterDamage,
+			TargetAttackedEvent,
+			GetOwner()->GetInstigatorController(),
+			GetOwner()  
+		);
+		TargetsToIgnore.AddUnique(TargetActor);
+	}
+
+}
+
+void UTraceComponent::HandleResetAttack()
+{
+	TargetsToIgnore.Empty();
 }
 
