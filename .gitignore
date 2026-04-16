@@ -4,6 +4,9 @@
 # JetBrains Rider / IntelliJ IDE files
 .idea/
 
+# UE Marketplace content (not redistributable)
+Content/Animations/
+
 # Compiled Object files
 *.slo
 *.lo

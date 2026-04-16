@@ -2,7 +2,7 @@
 
 An Unreal Engine 5 C++ project implementing a modular action-combat system with melee combos, lock-on targeting, AI enemies, and multiple gameplay variants.
 
-Built as a learning and prototyping project on top of UE5's Third Person Character template.
+Built while following the [GameDevTV](https://github.com/GameDevTV) Unreal Engine course as a learning and portfolio project.
 
 ## Features
 
@@ -28,36 +28,6 @@ The project contains three self-contained gameplay variants, each with its own c
 | `Variant_Combat` | Action sword combat with AI enemies, lava floors, damageable boxes, checkpoints |
 | `Variant_Platforming` | 3D platformer with dash ability and soft/moving platforms |
 | `Variant_SideScrolling` | Side-scrolling character with NPC AI, jump pads, pickups, and a UI life bar |
-
-## Tech Stack
-
-- **Engine**: Unreal Engine 5.6
-- **Language**: C++ throughout (no Blueprint-only logic in source)
-- **Plugins**: Enhanced Input, StateTree, GameplayStateTree, UMG/Slate
-- **Rendering**: Lumen GI + Reflections, Virtual Shadow Maps, DX12 / SM6
-
-## Getting Started
-
-1. Ensure you have **Unreal Engine 5.6** installed via the Epic Games Launcher.
-2. Clone or download this repository.
-3. Right-click `JamSepticEyeee.uproject` and select **Generate Visual Studio project files**.
-4. Open the `.sln` in Visual Studio (2022 recommended) and build the `Development Editor` configuration.
-5. Launch the project from the `.uproject` file.
-
-> The project was developed on Windows targeting DX12 / SM6. Linux (Vulkan SM6) target settings are also present in the config.
-
-## Project Structure
-
-```
-Source/JamSepticEyeee/
-├── Public/  &  Private/          # Core shared classes (characters, combat, interfaces)
-├── Variant_Combat/               # Combat variant classes and AI
-├── Variant_Platforming/          # Platforming variant classes
-└── Variant_SideScrolling/        # Side-scrolling variant classes
-
-Config/                           # Unreal Engine INI configuration
-Content/                          # Binary Unreal assets (.uasset / .umap)
-```
 
 ## License
 
