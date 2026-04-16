@@ -4,6 +4,8 @@ An Unreal Engine 5 C++ project implementing a lock-on targeting system, combo-ba
 
 Built while following the [GameDevTV](https://github.com/GameDevTV) Unreal Engine course as a learning and portfolio project.
 
+(if you're wondering why the uproject name is JamSepticEyeee, its cause i wanted to participate in the game jam but cancelled, and I already started playing around lol)
+
 ## Features
 
 ### Combat System
