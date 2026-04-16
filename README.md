@@ -1,6 +1,6 @@
 # Action Sword Combat
 
-An Unreal Engine 5 C++ project implementing a modular action-combat system with melee combos, lock-on targeting, AI enemies, and multiple gameplay variants.
+An Unreal Engine 5 C++ project implementing a modular action-combat system with melee combos, lock-on targeting, and AI enemies.
 
 Built while following the [GameDevTV](https://github.com/GameDevTV) Unreal Engine course as a learning and portfolio project.
 
@@ -19,15 +19,6 @@ Built while following the [GameDevTV](https://github.com/GameDevTV) Unreal Engin
 - Behaviour driven by Unreal's **StateTree** plugin (`CombatStateTreeUtility`)
 - Custom **Environment Query** context that targets the player (`EnvQueryContext_Player`)
 - Spawner actor (`CombatEnemySpawner`) for runtime enemy management
-
-### Gameplay Variants
-The project contains three self-contained gameplay variants, each with its own character class, game mode, player controller, and any supporting actors:
-
-| Variant | Key feature |
-|---|---|
-| `Variant_Combat` | Action sword combat with AI enemies, lava floors, damageable boxes, checkpoints |
-| `Variant_Platforming` | 3D platformer with dash ability and soft/moving platforms |
-| `Variant_SideScrolling` | Side-scrolling character with NPC AI, jump pads, pickups, and a UI life bar |
 
 ## License
 
