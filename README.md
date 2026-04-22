@@ -11,8 +11,9 @@ An Unreal Engine 5 C++ project implementing a lock-on targeting system, combo-ba
 - **Fighter / Enemy / MainPlayer interfaces** for clean cross-actor communication
 
 ## Acknowledgments
-Built while following the [GameDevTV](https://github.com/GameDevTV) Unreal Engine course as a learning and portfolio project.
-README written with the assistance of Claude (AI) to accurately reflect the implemented features.
+- Built while following the [GameDevTV](https://github.com/GameDevTV) Unreal Engine course as a learning and portfolio project.
+- README written with the assistance of Claude Code to accurately reflect the implemented features.
+
 (If you're wondering why the uproject name is JamSepticEyeee. Started it for a game jam, bailed on the jam, the name stuck)
 
 ## License
